@@ -43,7 +43,8 @@ router.post('/',
               },
               (err, ok) => {
                 if(err) throw err;
-                return res.redirect("/api/user/login");
+                return res.status(200).send("Ok");
+                //return res.redirect("/api/user/login");
               }
             );
           });
