@@ -4,7 +4,7 @@ const bcrypt = require("bcryptjs");
 const mongoose = require("mongoose");
 const {body, validationResult } = require("express-validator");
 const User = require("../models/User");
-const jwt = require("jsonwebtoken");
+//const jwt = require("jsonwebtoken");
 //const validateToken = require("../auth/validateToken.js")
 
 
@@ -27,7 +27,7 @@ router.post('/login',
         if(isMatch) {
           const jwtPayload = {
             id: user._id,
-            username: user.username
+            email: user.email
           }
           jwt.sign(
             jwtPayload,
@@ -54,7 +54,7 @@ router.get('/register', (req, res, next) => {
 });
 
 router.post('/register', 
-  body("email").isLength({min: 3}).escape(),
+  body("email").isLength({min: 3}).trim().escape(),
   body("password").isLength({min: 5}).escape(),
   (req, res, next) => {
     const errors = validationResult(req);
