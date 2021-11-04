@@ -41,7 +41,7 @@ router.post('/user/login',
             email: user.email
           }
           console.log("id = "+ user._id + ", email: " + user.email + "se:: ");
-          jwt.sign(jwtPayload, 'jijijijijijiji', {expiresIn: 180},
+          jwt.sign(jwtPayload, 'ASDSASDsdsadsa¤#%#¤%¤#%', {expiresIn: 180},
             (err, token) => {
               if(err) throw err;
               console.log("Login successful, token: " + token);
