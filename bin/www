@@ -4,10 +4,10 @@
  * Module dependencies.
  */
 
-var app = require('../app');
-var debug = require('debug')('wk7:server');
-var http = require('http');
-
+ var app = require('../app');
+ var debug = require('debug')('template-engines:server');
+ var http = require('http');
+  
 /**
  * Get port from environment and store in Express.
  */
