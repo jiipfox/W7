@@ -12,7 +12,7 @@ module.exports = function(req, res, next) {
     if(token == null) return res.sendStatus(401);
     console.log("Token found: " + token);
     jwt.verify(token, process.env.SECRET, (err, user) => {
-        if(err) return res.sendStatus(403);
+        if(err) return res.sendStatus(401);
         req.user = user;
         console.log("Validation ok, user info = " + user.email);
         res.send(user.email);
