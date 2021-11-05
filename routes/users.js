@@ -11,25 +11,15 @@ const validateToken = require("../auth/validateToken.js");
 
 
 router.get('/private', validateToken, (req, res, next) => {
-    //if(err) return res.status(401).json({message: "Not authorized."});
-    //res.json({token});
-    jwt.verify(req.token, process.env.SECRET, (err, payload) => {
-      if(err){
-        console.log("se: " + process.env.SECRET);
-        console.log("email: " + payload.email);
-        res.sendStatus(403);
-      } else {
-        res.json({
-          email: payload.email
-        });
-      }
-    });
+  console.log("accessing private");
+  return res.status(200);
 });
 
 
 router.get('/user/login', (req, res, next) => {
   res.render('login');
 });
+
 
 router.post('/user/login', 
   body("email").trim().escape(),
@@ -38,7 +28,7 @@ router.post('/user/login',
     User.findOne({email: req.body.email}, (err, user) =>{
     if(err) throw err;
     if(!user) {
-      return res.status(403).json({message: "User not found!"});
+      return res.status(401).json({message: "User not found!"});
     } else {
       bcrypt.compare(req.body.password, user.password, (err, isMatch) => {
         if(err) throw err;
@@ -50,7 +40,7 @@ router.post('/user/login',
               res.json({success: true, token});
             }
           )} else {
-            return res.status(403).json({message: "Login not succeeded!"});
+            return res.status(401).json({message: "Login not succeeded!"});
           }
       })
     }
