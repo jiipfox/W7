@@ -15,7 +15,7 @@ module.exports = function(req, res, next) {
         if(err) return res.sendStatus(401);
         req.user = user;
         console.log("Validation ok, user info = " + user.email);
-        res.send(user.email);
+        res.json({"email": user.email});
         next();
     });   
 };
