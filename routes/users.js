@@ -11,11 +11,19 @@ const validateToken = require("../auth/validateToken.js");
 
 
 router.get('/private', validateToken, (req, res, next) => {
-  // check if auth ok
-  // send email as json
-
-  // not ok
-  return res.status(401).json({message: "Not authorized."});
+    //if(err) return res.status(401).json({message: "Not authorized."});
+    //res.json({token});
+    jwt.verify(req.token, process.env.SECRET, (err, payload) => {
+      if(err){
+        console.log("se: " + process.env.SECRET);
+        console.log("email: " + payload.email);
+        res.sendStatus(403);
+      } else {
+        res.json({
+          email: payload.email
+        });
+      }
+    });
 });
 
 
@@ -25,7 +33,7 @@ router.get('/user/login', (req, res, next) => {
 
 router.post('/user/login', 
   body("email").trim().escape(),
-  body("password").escape(),
+  body("password"),
   (req, res, next) => {
     User.findOne({email: req.body.email}, (err, user) =>{
     if(err) throw err;
@@ -35,18 +43,15 @@ router.post('/user/login',
       bcrypt.compare(req.body.password, user.password, (err, isMatch) => {
         if(err) throw err;
         if(isMatch) {
-          const jwtPayload = {
-            id: user._id,
-            email: user.email
-          }
-          console.log("id = "+ user._id + ", email: " + user.email + "se:: ");
+          const jwtPayload = {id: user._id, email: user.email }
           jwt.sign(jwtPayload, process.env.SECRET, {expiresIn: 180}, (err, token) => {
               if(err) throw err;
               console.log("Login successful, token: " + token);
               res.json({success: true, token});
             }
-          );
-        }
+          )} else {
+            return res.status(403).json({message: "Login not succeeded!"});
+          }
       })
     }
 
@@ -62,7 +67,7 @@ router.get('/user/register', (req, res, next) => {
 
 router.post('/user/register', 
   body("email").isLength({min: 3}).trim().escape(),
-  body("password").isLength({min: 5}).escape(),
+  body("password").isLength({min: 5}),
   (req, res, next) => {
     const errors = validationResult(req);
     if(!errors.isEmpty()) {
