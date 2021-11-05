@@ -57,7 +57,9 @@ router.get('/user/register', (req, res, next) => {
 
 router.post('/user/register', 
   body("email").isLength({min: 3}).trim().escape(),
-  body("password").isLength({min: 5}),
+  body("password")
+    .isLength({ min: 8 })
+    .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,}$/, "i"),
   (req, res, next) => {
     const errors = validationResult(req);
     if(!errors.isEmpty()) {
