@@ -2,7 +2,7 @@ extends layout
 
 block content
   h1 Register
-  form(action="/api/user/register/" method="POST")
+  form(action="/register" method="POST")
     label(for="email") Email
     input(type="text" name="email" id="email" required)
     label(for="password") Password 
