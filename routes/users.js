@@ -80,7 +80,7 @@ router.post('/login',
 
 
 
-router.get('/register', (req, res, next) => {
+router.get('/register.html', (req, res, next) => {
   console.log("Get register content");
   res.render('register');
 });
