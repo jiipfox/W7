@@ -23,7 +23,7 @@ router.get('/private', validateToken, (req, res, next) => {
 });
 
 
-router.get('/login', (req, res, next) => {
+router.get('/login.html', (req, res, next) => {
   console.log("Get login");
   res.render('login');
 });
@@ -117,7 +117,7 @@ router.post('/register',
                 if(err) throw err;
                 console.log("REDIRECT!");
                 //return res.status(200).send("Ok");
-                return res.redirect("/login");
+                return res.redirect("/login.html");
               }
             );
           });
