@@ -2,9 +2,10 @@ extends layout
 
 block content
   h1 Login
-  form(action="/login" method="POST")
+  form(action="" id="login-form" method="POST")
     label(for="email") Email 
-    input(type="text" name="email" id="email" required)
+    input(type="email" name="email" id="email" required)
     label(for="password") Password 
     input(type="password" name="password" id="password" required)
-    button(class="btn" type="submit") Login
+    input(type="submit" value="Login")
+  script(src="javascripts/users.js")
