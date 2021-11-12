@@ -14,6 +14,7 @@ if (document.readyState !== "loading") {
 
 function initializeCode() {
   document.getElementById("login-form").addEventListener("submit", onSubmit);
+  //document.getElementById("logout").addEventListener("click", logout);
 }
 
 function onSubmit(event) {
@@ -27,15 +28,28 @@ function onSubmit(event) {
   })
       .then((response) => response.json())
       .then((data) => {
-        console.log("Helou help, token:");
+        console.log("In client side, token:");
         console.log(data.token);
         storeToken(data.token);
         window.location.href="/";
       })
 }
 
+
 function storeToken(token) {
   localStorage.setItem("auth_token", token);
 }
+
+
+function retrieveToken() {
+  return localStorage.getItem("auth_token");
+}
+
+
+function logout(){
+  localStorage.removeItem("auth_token");
+  window.location.href = "/";
+}
+
 
  

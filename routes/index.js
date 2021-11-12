@@ -16,7 +16,6 @@ const upload = multer({storage})
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  console.log("solomolo");
   res.render('index', { title: 'Express' });
 });
 
